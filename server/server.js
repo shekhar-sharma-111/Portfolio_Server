@@ -24,7 +24,14 @@ const transporter = nodemailer.createTransport({
    
 
 // Middleware
-app.use(cors());
+const corsOptions = {
+  origin: ['https://portfolio-shekhar-sharmas-projects-52c851c1.vercel.app'],
+  methods: ['GET,POST'],   
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+// app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 mongoose.connect('mongodb+srv://Shekhar:Shekhar7206@cluster0.z1lxhch.mongodb.net/portfolio?retryWrites=true&w=majority&appName=Cluster0', {
