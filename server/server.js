@@ -1,5 +1,5 @@
 const express = require('express');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
@@ -34,23 +34,23 @@ app.use(cors(corsOptions));
 // app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-mongoose.connect('mongodb+srv://Shekhar:Shekhar7206@cluster0.z1lxhch.mongodb.net/portfolio?retryWrites=true&w=majority&appName=Cluster0', {
+// mongoose.connect('mongodb+srv://Shekhar:Shekhar7206@cluster0.z1lxhch.mongodb.net/portfolio?retryWrites=true&w=majority&appName=Cluster0', {
  
-}).then(() => {
-  console.log('Connected to MongoDB');
-}).catch((error) => {
-  console.error('Error connecting to MongoDB:', error);
-});
+// }).then(() => {
+//   console.log('Connected to MongoDB');
+// }).catch((error) => {
+//   console.error('Error connecting to MongoDB:', error);
+// });
 
 
 //schema and model
-const contactSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true },
-  message: { type: String, required: true },
-});
+// const contactSchema = new mongoose.Schema({
+//   name: { type: String, required: true },
+//   email: { type: String, required: true },
+//   message: { type: String, required: true },
+// });
 
-const Contact = mongoose.model('contacts', contactSchema);
+// const Contact = mongoose.model('contacts', contactSchema);
 
 // Handle form submission
 app.post('/contact', async (req, res) => {
@@ -64,7 +64,7 @@ app.post('/contact', async (req, res) => {
       };
    //  const newContact = new Contact({ name, email, message });
    // await newContact.save();
-    transporter.sendMail(mailOptions,function(err,info){
+  await  transporter.sendMail(mailOptions,function(err,info){
       if(err){
         console.log(err);
         }else{
