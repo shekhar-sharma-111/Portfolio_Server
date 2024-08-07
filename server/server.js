@@ -64,7 +64,7 @@ app.post('/contact', async (req, res) => {
       };
    //  const newContact = new Contact({ name, email, message });
    // await newContact.save();
-  await  transporter.sendMail(mailOptions,function(err,info){
+   transporter.sendMail(mailOptions,function(err,info){
       if(err){
         console.log(err);
         }else{
