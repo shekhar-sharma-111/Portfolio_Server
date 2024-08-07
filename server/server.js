@@ -62,8 +62,8 @@ app.post('/contact', async (req, res) => {
       subject: 'protfolio contact request',
       text: `${name} want to contact with email:${email} \n message:${message} `
       };
-    const newContact = new Contact({ name, email, message });
-    newContact.save();
+   //  const newContact = new Contact({ name, email, message });
+   // await newContact.save();
     transporter.sendMail(mailOptions,function(err,info){
       if(err){
         console.log(err);
