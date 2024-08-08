@@ -11,8 +11,8 @@ const host=process.env.HOST || 'localhost'
 
 // Middleware
 const corsOptions = {
-  // origin: ['https://portfolio-shekhar-sharmas-projects-52c851c1.vercel.app'],
-  origin: '*', 
+  origin: ['https://portfolio-shekhar-sharmas-projects-52c851c1.vercel.app'],
+  // origin: '*', 
   methods: ['GET,POST'],   
   credentials: true,
 };
@@ -68,7 +68,7 @@ app.post('/contact', async (req, res) => {
       };
     const newContact = new Contact({ name, email, message });
    await newContact.save();
-  await transporter.sendMail(mailOptions,function(err,info){
+  transporter.sendMail(mailOptions,function(err,info){
       if(err){
         throw new Error("error in transpoter.sendmail")
         }
