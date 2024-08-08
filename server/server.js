@@ -9,6 +9,18 @@ const app = express();
 const port = process.env.PORT || 3001;
 const host=process.env.HOST || 'localhost'
 
+// Middleware
+const corsOptions = {
+  origin: ['https://portfolio-shekhar-sharmas-projects-52c851c1.vercel.app'],
+  methods: ['GET,POST'],   
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+// app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 //nodemailer
 
 const nodemailer = require('nodemailer');
@@ -23,59 +35,49 @@ const transporter = nodemailer.createTransport({
     });
    
 
-// Middleware
-const corsOptions = {
-  origin: ['https://portfolio-shekhar-sharmas-projects-52c851c1.vercel.app'],
-  methods: ['GET,POST'],   
-  credentials: true,
-};
 
-app.use(cors(corsOptions));
-// app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-mongoose.connect('mongodb+srv://Shekhar:Shekhar7206@cluster0.z1lxhch.mongodb.net/portfolio?retryWrites=true&w=majority&appName=Cluster0', {
+// mongoose.connect('mongodb+srv://Shekhar:Shekhar7206@cluster0.z1lxhch.mongodb.net/portfolio?retryWrites=true&w=majority&appName=Cluster0', {
  
-}).then(() => {
-  console.log('Connected to MongoDB');
-}).catch((error) => {
-  console.error('Error connecting to MongoDB:', error);
-});
+// }).then(() => {
+//   console.log('Connected to MongoDB');
+// }).catch((error) => {
+//   console.error('Error connecting to MongoDB:', error);
+// });
 
 
 //schema and model
-const contactSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true },
-  message: { type: String, required: true },
-});
+// const contactSchema = new mongoose.Schema({
+//   name: { type: String, required: true },
+//   email: { type: String, required: true },
+//   message: { type: String, required: true },
+// });
 
-const Contact = mongoose.model('contacts', contactSchema);
+// const Contact = mongoose.model('contacts', contactSchema);
 
 // Handle form submission
 app.post('/contact', async (req, res) => {
   try {
     const { name, email, message } = req.body;
+    
     const mailOptions = {
       from: process.env.EMAIL ,
       to:  process.env.EMAIL,
       subject: 'protfolio contact request',
       text: `${name} want to contact with email:${email} \n message:${message} `
       };
-    const newContact = new Contact({ name, email, message });
-   await newContact.save();
-   transporter.sendMail(mailOptions,function(err,info){
+   //  const newContact = new Contact({ name, email, message });
+   // await newContact.save();
+  await transporter.sendMail(mailOptions,function(err,info){
       if(err){
-        console.log(err);
-        }else{
-          console.log(info);
+        throw new Error("error in transpoter.sendmail")
         }
     });
     res.status(201).json({ message: 'Message received' });
     
   } catch (error) {
-    console.error('Error saving message:', error);
-    res.status(500).json({ error: 'Error saving message' });
+    // console.error('Error saving message:', error);
+    // res.status(500).json({ error: 'Error saving message' });
+     res.status(500).json({ error: error.message });
   }
 });
 
