@@ -99,7 +99,6 @@
 //     console.error('Error starting server:', err);
 //   }
 // });
-
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
@@ -113,7 +112,7 @@ const port = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors({
-  origin: 'https://portfolio-shekhar-sharmas-projects-52c851c1.vercel.app',
+  origin: 'https://portfolio-shekhar-sharmas-projects-52c851c1.vercel.app', // Adjust this to match your frontend URL
   methods: ['GET', 'POST'],
   credentials: true,
 }));
@@ -129,7 +128,6 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL,
     pass: process.env.PASSWORD,
   },
-  dnsCache: true, // Enable DNS cache for faster email sending
 });
 
 // Handle Form Submission
@@ -145,7 +143,6 @@ app.post('/contact', async (req, res) => {
 
   try {
     await transporter.sendMail(mailOptions);
-
     res.status(201).json({ message: 'Message received successfully!' });
   } catch (error) {
     console.error('Error sending email:', error);
@@ -163,4 +160,3 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
-
