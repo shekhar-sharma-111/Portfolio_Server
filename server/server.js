@@ -11,7 +11,8 @@ const host=process.env.HOST || 'localhost'
 
 // Middleware
 const corsOptions = {
-  origin: ['https://portfolio-shekhar-sharmas-projects-52c851c1.vercel.app'],
+  // origin: ['https://portfolio-shekhar-sharmas-projects-52c851c1.vercel.app'],
+  origin: '*', 
   methods: ['GET,POST'],   
   credentials: true,
 };
