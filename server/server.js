@@ -111,17 +111,16 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 // Middleware
-// app.use(cors({
-//   origin: 'https://portfolio-shekhar-sharmas-projects-52c851c1.vercel.app', // Adjust this to match your frontend URL
-//   methods: ['GET', 'POST'],
-//   credentials: true,
-// }));
-app.use(cors({
-  origin: 'https://portfolio-shekhar-sharmas-projects-52c851c1.vercel.app',
-  methods: ['GET', 'POST'],
+const corsOptions = {
+  origin: ['https://portfolio-shekhar-sharmas-projects-52c851c1.vercel.app'],
+  methods: ['GET,POST'],   
   credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+};
+
+app.use(cors(corsOptions));
+// app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
